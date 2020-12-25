@@ -1,12 +1,15 @@
 const socketClient = require("socket.io-client");
 const axios = require("axios");
+const ms = require('ms');
 
 const connection = socketClient("https://chat-gateway.veld.dev/");
 console.log(`starting`);
 
 const members = {};
+const channels = {};
 let currentUser = null;
 let token = null;
+let uptime = 0;
 
 connection.on('connect', () => {
   console.log("connected to gateway");
@@ -14,6 +17,9 @@ connection.on('connect', () => {
     token: null,
     bot: true
   })
+  setInterval(() => {
+  uptime++
+  }, 1);
 });
 
 connection.on('connect_error', (error) => {
@@ -26,6 +32,9 @@ connection.on('ready', (info) => {
   currentUser = info.user;
   for (let m of info.members) {
     members[m.id] = m;
+  };
+  for (let c of info.channels) {
+    channels[c.id] = c;
   }
 
   connection.emit("channel:message", {
@@ -98,8 +107,8 @@ connection.on('message:create', async (message) => {
     try {
       await axios.post(`https://chat-gateway.veld.dev/api/v1/channels/${message.channelId}/messages`, {
         embed: {
-          title: `User info for ${user.name}`,
-          description: `ID: ${user.id}\nStatus: ${user.status.value}`,
+          title: `Heres some info about ${user.name}`,
+          description: `**ID:** ${user.id}\n**Status:** ${user.status.value}`,
           thumbnailUrl: user.avatarUrl,
           footer: `Bot: ${user.bot ? user.bot + " ✅" : user.bot + " ❌"}`,
           author: {
