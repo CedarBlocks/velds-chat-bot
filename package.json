@@ -1,0 +1,14 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "bot for velds thingy thing",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "CedarBlocks",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "socket.io-client": "^2.3.0"
+  }
+}
