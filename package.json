@@ -8,7 +8,7 @@
   },
   "author": "CedarBlocks",
   "dependencies": {
-   "axios": "^0.19.2",
+   "axios": "^0.21.1",
     "ms": "^2.1.3",
     "socket.io-client": "^2.3.0",
     "string-toolkit": "^1.2.1",
